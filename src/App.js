@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import Cart from "./Components/Cart";
+import { useState } from "react";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import Dashboard from "./Components/Dashboard";
 
 function App() {
+  const [cart, SetCart] = useState([]);
+
+  const clickHandler = (item) => {
+    SetCart([...cart, item]);
+    console.log([...cart, item]);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Dashboard clickHandler={clickHandler} />
+          </Route>
+          <Route path="/cart">
+            <Cart cart={cart} SetCart={SetCart} />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
